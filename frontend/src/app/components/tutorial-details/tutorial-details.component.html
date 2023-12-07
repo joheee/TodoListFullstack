@@ -1,0 +1,77 @@
+<div *ngIf="viewMode; else editable">
+  <div *ngIf="currentTutorial.id">
+    <h4>Tutorial</h4>
+    <div>
+      <label><strong>Title:</strong></label> {{ currentTutorial.nama }}
+    </div>
+    <div>
+      <label><strong>Description:</strong></label>
+      {{ currentTutorial.deksripsi }}
+    </div>
+    <div>
+      <label><strong>Status:</strong></label>
+      {{ currentTutorial.selesai ? "Finished" : "Pending" }}
+    </div>
+
+    <a class="badge badge-warning"
+      routerLink="/todos/{{ currentTutorial.id }}">
+      Edit
+    </a>
+  </div>
+
+  <div *ngIf="!currentTutorial">
+    <br />
+    <p>Please click on a Tutorial...</p>
+  </div>
+</div>
+
+<ng-template #editable>
+  <div *ngIf="currentTutorial.id" class="edit-form">
+    <h4>To Do</h4>
+    <form>
+      <div class="form-group">
+        <label for="title">Nama</label>
+        <input
+          type="text"
+          class="form-control"
+          id="nama"
+          [(ngModel)]="currentTutorial.nama"
+          name="nama"
+        />
+      </div>
+      <div class="form-group">
+        <label for="description">Deskripsi</label>
+        <input
+          type="text"
+          class="form-control"
+          id="deksripsi"
+          [(ngModel)]="currentTutorial.deksripsi"
+          name="deksripsi"
+        />
+      </div>
+
+      <div class="form-group">
+        <label><strong>Status:</strong></label>
+        {{ currentTutorial.selesai ? "Finished" : "Pending" }}
+      </div>
+    </form>
+
+    <button class="badge badge-danger mr-2" (click)="deleteTutorial()">
+      Delete
+    </button>
+
+    <button
+      type="submit"
+      class="badge badge-success mb-2"
+      (click)="updateTutorial()"
+    >
+      Update
+    </button>
+    <p>{{ message }}</p>
+  </div>
+
+  <div *ngIf="!currentTutorial.id">
+    <br />
+    <p>Cannot access this To do...</p>
+  </div>
+</ng-template>
